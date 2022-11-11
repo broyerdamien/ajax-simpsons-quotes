@@ -18,34 +18,36 @@
     <section class="section">
         <div class="container">
             <h1 class="title">Simpson API</h1>
+            <button class="" onclick="fetchSimpsonsJSON()">Nouvelle citation</button>
 
-            <div class="content" id="chuck-norris"></div>
+            <div class="content" id="simpsons"></div>
         </div>
     </section>
 
     <!-- We need to load axios first! -->
     <script>
-        function fetchPokemonJSON() {
+        function fetchSimpsonsJSON() {
             // Feel free to download this HTML and edit it, to use another Pokemon ID
             const citation = 1;
-            const url = `https://simpsons-quotes-api.herokuapp.com/quotes${citation}`;
+            const url = `https://simpsons-quotes-api.herokuapp.com/quotes`;
             axios.get(url)
                 .then(function(response) {
-                    return response.data[1]; // response.data instead of response.json() with fetch
+                    return response.data; // response.data instead of response.json() with fetch
                 })
-                .then(function(pokemon) {
-                    console.log('data decoded from JSON:', pokemon);
+                .then(function(simpsons) {
+                    console.log('data decoded from JSON:', simpsons);
 
                     // Build a block of HTML
-                    const pokemonHtml = `
-        <p><strong>${pokemon.name}</strong></p>
-        <img src="${pokemon.sprites.front_shiny}" />
+                    const simpsonsHtml = `
+                    <p><strong>${simpsons[0].character}</strong></p>
+        <img src="${simpsons[0].image}" />
+        <p>${simpsons[0]['quote']}</p>
       `;
-                    document.querySelector('#chuck-norris').innerHTML = pokemonHtml;
+                    document.querySelector('#simpsons').innerHTML = simpsonsHtml;
                 });
         }
 
-        fetchPokemonJSON();
+        fetchSimpsonsJSON()
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
     <script></script>
